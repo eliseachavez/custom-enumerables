@@ -1,6 +1,8 @@
 module Enumerable
   # mimics the Enumerable module and all the enumerators it provides to Array and Hash classes
   def my_each_with_index
+    return to_enum unless block_given?
+
     idx = 0
     my_each do |element|
       yield(element, idx)
