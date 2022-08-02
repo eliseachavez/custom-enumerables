@@ -15,9 +15,7 @@ module Enumerable
 
     ary = []
     my_each do |element|
-      if yield(element)
-        ary << element
-      end
+      ary << element if yield(element)
     end
     ary
   end
@@ -51,11 +49,19 @@ module Enumerable
     my_each do |element|
       true_count += 1 if yield(element)
     end
+
     true_count.positive? ? false : true
   end
 
   def my_count
-    puts "hi"
+    return size unless block_given?
+
+    true_count = 0
+    my_each do |element|
+      true_count += 1 if yield(element)
+    end
+
+    true_count
   end
 
   def my_map
@@ -88,10 +94,5 @@ class Array
   end
 end
 
-# ary = [1, 1, 2, 3, 5, 8, 13, 21, 34]
-# ans = ary.my_all? { |value| value > 0 }
-# puts "Are ALL values over 5? #{ans}"
-
-# ary2 = [1, 1, 2, 3, -2, 5, 8, 13, 21, 34]
-# ans = ary2.my_all? { |value| value > 0 }
-# puts "Are ALL values over 5? #{ans}"
+#result = [1,1,2,3,5,8,13,21,34].my_count { |value| value > 5 }
+#puts result
