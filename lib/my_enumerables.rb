@@ -15,8 +15,6 @@ end
 # on the Array class. Methods defined in
 # your enumerable module will have access
 # to this method
-# my example of this:
-# [1,2,3].my_each { |element| puts element} # second part is the block that is an argument to my_each
 class Array
   # my_each iterates through each element of the calling array
   include Enumerable
@@ -33,9 +31,15 @@ class Array
   end
 end
 
-[1,2,3].my_each
-final = [[1, 0, 1, 0], [1, 1, 1, 1], [2, 2, 2, 2], [3, 3, 3, 3], [5, 4, 5, 4], [8, 5, 8, 5], [13, 6, 13, 6], [21, 7, 21, 7], [34, 8, 34, 8]].my_each_with_index
-pp final
-if final ==  [[[1, 0, 1, 0], 0], [[1, 1, 1, 1], 2], [[2, 2, 2, 2], 4], [[3, 3, 3, 3], 6], [[5, 4, 5, 4], 8], [[8, 5, 8, 5], 10], [[13, 6, 13, 6], 12], [[21, 7, 21, 7], 14], [[34, 8, 34, 8], 16]].my_each_with_index
-  puts "success!!"
-end
+
+# [1,2,3].my_each
+# ary = []
+# final = [[1, 0, 1, 0], [1, 1, 1, 1], [2, 2, 2, 2], [3, 3, 3, 3], [5, 4, 5, 4], [8, 5, 8, 5], [13, 6, 13, 6], [21, 7, 21, 7], [34, 8, 34, 8]].my_each_with_index do |element, index|
+#   ary << [element * 2, index * 2]
+# end
+
+# pp final
+# pp ary
+# if final ==  [[[1, 0, 1, 0], 0], [[1, 1, 1, 1], 2], [[2, 2, 2, 2], 4], [[3, 3, 3, 3], 6], [[5, 4, 5, 4], 8], [[8, 5, 8, 5], 10], [[13, 6, 13, 6], 12], [[21, 7, 21, 7], 14], [[34, 8, 34, 8], 16]].my_each_with_index
+#   puts "success!!"
+# end
