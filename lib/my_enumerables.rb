@@ -9,6 +9,30 @@ module Enumerable
       idx += 1
     end
   end
+
+  def my_select
+    return to_enum unless block_given?
+
+    ary = []
+    my_each do |element|
+      if yield(element)
+        ary << element
+      end
+    end
+    ary
+  end
+
+  def my_all?
+    return to_enum unless block_given?
+
+    nil_count = 0
+    my_each do |element|
+      nil_count += 1 unless yield(element)
+    end
+
+    nil_count.positive? ? false : true
+  end
+
 end
 
 # You will first have to define my_each
@@ -31,15 +55,10 @@ class Array
   end
 end
 
+# ary = [1, 1, 2, 3, 5, 8, 13, 21, 34]
+# ans = ary.my_all? { |value| value > 0 }
+# puts "Are ALL values over 5? #{ans}"
 
-# [1,2,3].my_each
-# ary = []
-# final = [[1, 0, 1, 0], [1, 1, 1, 1], [2, 2, 2, 2], [3, 3, 3, 3], [5, 4, 5, 4], [8, 5, 8, 5], [13, 6, 13, 6], [21, 7, 21, 7], [34, 8, 34, 8]].my_each_with_index do |element, index|
-#   ary << [element * 2, index * 2]
-# end
-
-# pp final
-# pp ary
-# if final ==  [[[1, 0, 1, 0], 0], [[1, 1, 1, 1], 2], [[2, 2, 2, 2], 4], [[3, 3, 3, 3], 6], [[5, 4, 5, 4], 8], [[8, 5, 8, 5], 10], [[13, 6, 13, 6], 12], [[21, 7, 21, 7], 14], [[34, 8, 34, 8], 16]].my_each_with_index
-#   puts "success!!"
-# end
+# ary2 = [1, 1, 2, 3, -2, 5, 8, 13, 21, 34]
+# ans = ary2.my_all? { |value| value > 0 }
+# puts "Are ALL values over 5? #{ans}"
