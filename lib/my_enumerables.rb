@@ -65,7 +65,13 @@ module Enumerable
   end
 
   def my_map
-    puts "hi"
+    return to_enum unless block_given?
+
+    ary = []
+    my_each do |element|
+      ary << yield(element)
+    end
+    ary
   end
 
   def my_inject
