@@ -25,12 +25,45 @@ module Enumerable
   def my_all?
     return to_enum unless block_given?
 
-    nil_count = 0
+    false_count = 0
     my_each do |element|
-      nil_count += 1 unless yield(element)
+      false_count += 1 unless yield(element)
     end
 
-    nil_count.positive? ? false : true
+    false_count.positive? ? false : true
+  end
+
+  def my_any?
+    return to_enum unless block_given?
+
+    any = false
+    my_each do |element|
+      any = true if yield(element)
+    end
+
+    any ? true : false
+  end
+
+  def my_none?
+    return to_enum unless block_given?
+
+    true_count = 0
+    my_each do |element|
+      true_count += 1 if yield(element)
+    end
+    true_count.positive? ? false : true
+  end
+
+  def my_count
+    puts "hi"
+  end
+
+  def my_map
+    puts "hi"
+  end
+
+  def my_inject
+    puts "hi"
   end
 
 end
@@ -53,34 +86,6 @@ class Array
     end
     self
   end
-
-  def my_any?
-    return to_enum unless block_given?
-
-    any = false
-    my_each do |element|
-      any = true if yield(element)
-    end
-
-    any ? true : false
-  end
-
-  def my_none?
-    puts "hi"
-  end
-
-  def my_count
-    puts "hi"
-  end
-
-  def my_map
-    puts "hi"
-  end
-
-  def my_inject
-    puts "hi"
-  end
-
 end
 
 # ary = [1, 1, 2, 3, 5, 8, 13, 21, 34]
