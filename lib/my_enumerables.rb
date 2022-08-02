@@ -74,31 +74,31 @@ module Enumerable
     ary
   end
 
-  def my_inject
-    puts "hi"
-  end
+  def my_inject(arg, &blk)
+    return 'Error, no block given' unless block_given?
 
+    idx = 0
+    accumulator = arg if arg
+    my_each do |element|
+      accumulator = element if accumulator.nil? && idx.zero?
+      accumulator = blk.call(accumulator, element)
+      idx += 1
+    end
+    accumulator
+  end
 end
 
-# You will first have to define my_each
-# on the Array class. Methods defined in
-# your enumerable module will have access
-# to this method
 class Array
-  # my_each iterates through each element of the calling array
   include Enumerable
 
   def my_each(&blk)
-    return to_enum unless block_given? # guard clause #self.to_enum is redundant
+    return to_enum unless block_given?
 
     i = 0
-    until i == size # self.size is redundant apparently, only need to say size
+    until i == size
       blk.call(self[i])
       i += 1
     end
     self
   end
 end
-
-#result = [1,1,2,3,5,8,13,21,34].my_count { |value| value > 5 }
-#puts result
